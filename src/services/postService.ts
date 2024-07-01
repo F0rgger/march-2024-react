@@ -13,4 +13,4 @@ const getPostsByUserId = (userId: number): Promise<Post[]> => {
 };
 
 export {getPostsByUserId}
-export type { Post };
+
