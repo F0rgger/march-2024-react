@@ -3,7 +3,7 @@ import { Post } from '../types/postTypes';
 
 const BASE_URL = 'https://dummyjson.com';
 
-export const getPostsByUserId = (userId: number): Promise<Post[]> => {
+const getPostsByUserId = (userId: number): Promise<Post[]> => {
     return axios.get(`${BASE_URL}/posts/user/${userId}`)
         .then(response => response.data.posts)
         .catch(error => {
@@ -12,5 +12,5 @@ export const getPostsByUserId = (userId: number): Promise<Post[]> => {
         });
 };
 
-
+export {getPostsByUserId}
 export type { Post };
