@@ -12,5 +12,5 @@ export const getPostsByUserId = (userId: number): Promise<Post[]> => {
         });
 };
 
-// Додайте цей рядок для експорту типу Post
+
 export type { Post };
