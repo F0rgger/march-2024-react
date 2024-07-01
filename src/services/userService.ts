@@ -8,7 +8,7 @@ const BASE_URL = 'https://dummyjson.com';
         .then(response => response.data.users)
         .catch(error => {
             console.error("Error", error);
-            return []; // Повертаємо порожній масив у разі помилки
+            return [];
         });
 };
 export {getUsers}

@@ -8,7 +8,7 @@ const getPostsByUserId = (userId: number): Promise<Post[]> => {
         .then(response => response.data.posts)
         .catch(error => {
             console.error("Error", error);
-            return []; // Повертаємо порожній масив у разі помилки
+            return [];
         });
 };
 
