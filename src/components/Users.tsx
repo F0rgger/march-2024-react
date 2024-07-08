@@ -1,30 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import User from './User';
+import React, { Component } from 'react';
+import { User } from '../interfaces/User';
 import { getUsers } from '../services/userService';
-import { User as UserType } from '../types';
+import UserComponent from './User';
+
+interface UsersState {
+    users: User[];
+}
 
 interface UsersProps {
     onUserSelect: (userId: number) => void;
 }
 
-const Users: React.FC<UsersProps> = ({ onUserSelect }) => {
-    const [users, setUsers] = useState<UserType[]>([]);
-
-    useEffect(() => {
-        const fetchUsers = async () => {
-            const usersData = await getUsers();
-            setUsers(usersData);
+class Users extends Component<UsersProps, UsersState> {
+    constructor(props: UsersProps) {
+        super(props);
+        this.state = {
+            users: [],
         };
-        fetchUsers();
-    }, []);
+    }
 
-    return (
-        <div>
-            {users.map((user) => (
-                <User key={user.id} user={user} onUserSelect={onUserSelect} />
-            ))}
-        </div>
-    );
-};
+    async componentDidMount() {
+        const users = await getUsers();
+        this.setState({ users });
+    }
+
+    render() {
+        const { users } = this.state;
+        const { onUserSelect } = this.props;
+
+        return (
+            <div>
+                <h1>Users</h1>
+                {users.map(user => (
+                    <UserComponent key={user.id} user={user} onUserSelect={onUserSelect} />
+                ))}
+            </div>
+        );
+    }
+}
 
 export default Users;

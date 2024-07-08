@@ -1,18 +1,26 @@
-import React from 'react';
-import { User as UserType } from '../types';
+import React, { Component } from 'react';
+import { User } from '../interfaces/User';
 
 interface UserProps {
-    user: UserType;
+    user: User;
     onUserSelect: (userId: number) => void;
 }
 
-const User: React.FC<UserProps> = ({ user, onUserSelect }) => {
-    return (
-        <div>
-            <h3>{user.firstName} {user.lastName}</h3>
-            <button onClick={() => onUserSelect(user.id)}>View Posts</button>
-        </div>
-    );
-};
+class UserComponent extends Component<UserProps> {
+    handleSelect = () => {
+        this.props.onUserSelect(this.props.user.id);
+    };
 
-export default User;
+    render() {
+        const { user } = this.props;
+
+        return (
+            <div>
+                <h2>{user.firstName} {user.lastName}</h2>
+                <button onClick={this.handleSelect}>Select User</button>
+            </div>
+        );
+    }
+}
+
+export default UserComponent;
