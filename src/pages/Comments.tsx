@@ -7,8 +7,8 @@ const Comments: React.FC = () => {
 
     useEffect(() => {
         fetchComments()
-            .then(response => {
-                setComments(response.data.comments);
+            .then(data => {
+                setComments(data.comments);
             })
             .catch(error => console.error('Error fetching comments:', error));
     }, []);

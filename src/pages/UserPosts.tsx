@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { fetchPosts } from '../api';
 import { Post } from '../interfaces/Post';
+import { Link } from 'react-router-dom';
 
-const Posts: React.FC = () => {
+const UserPosts: React.FC = () => {
+    const { userId } = useParams<{ userId: string }>();
     const [posts, setPosts] = useState<Post[]>([]);
 
     useEffect(() => {
-        fetchPosts()
-            .then(data => {
-                setPosts(data.posts);
-            })
-            .catch(error => console.error('Error fetching posts:', error));
-    }, []);
+        if (userId) {
+            fetchPosts()
+                .then(data => {
+                    setPosts(data.posts.filter(post => post.userId === parseInt(userId)));
+                })
+                .catch(error => console.error('Error fetching posts:', error));
+        }
+    }, [userId]);
 
     return (
         <div>
-            <h1>Posts</h1>
+            <h1>Posts by User {userId}</h1>
             <ul>
                 {posts.map(post => (
                     <li key={post.id}>
@@ -30,4 +34,4 @@ const Posts: React.FC = () => {
     );
 }
 
-export default Posts;
+export default UserPosts;
